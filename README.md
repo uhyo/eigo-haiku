@@ -34,3 +34,7 @@ npm run build      # dist/ に静的サイトを出力
 ## 読み推定モデルについて
 
 `public/model-c2k.safetensors` は [Patchethium/e2k](https://github.com/Patchethium/e2k) の英語→カタカナ変換モデル（C2K）です。Wiktionary と JMdict/EDICT から作った辞書で学習されています。`src/e2k/model.ts` は、その推論部分（GRUエンコーダ・デコーダとアテンション）をTypeScriptに移植したものです。e2k のライセンスは Unlicense です（`public/LICENSE-e2k.txt`）。
+
+## ライセンス
+
+MIT（`LICENSE`）。ただし `public/model-c2k.safetensors` は e2k に由来し、Unlicense です。

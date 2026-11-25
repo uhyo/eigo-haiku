@@ -2,6 +2,7 @@
   "name": "eigo-haiku",
   "version": "1.0.0",
   "description": "英単語のカタカナ読みで5・7・5を判定する「ジャパニーズ英語俳句」",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
