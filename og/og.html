@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!-- Source of public/og.png. Open at 1200×630 and take a screenshot to regenerate. -->
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700&family=Zen+Kaku+Gothic+New:wght@500;700&display=block" rel="stylesheet">
+<style>
+:root{--ink:#1b1b1f;--grid:#e0442a;--soft:#fbe3dd;--en:#2b3f8c;--mute:#6b6a70}
+*{box-sizing:border-box;margin:0}
+body{width:1200px;height:630px;background:#fff;color:var(--ink);font-family:"Zen Kaku Gothic New",sans-serif;overflow:hidden}
+.frame{position:absolute;inset:28px;border:3px solid var(--grid);border-radius:4px}
+.title{position:absolute;left:84px;top:70px;font:700 64px/1.05 "Shippori Mincho B1",serif;letter-spacing:-.01em}
+.sub{position:absolute;left:88px;top:156px;font:500 26px/1.3 "Zen Kaku Gothic New",sans-serif;color:var(--mute)}
+.grid{position:absolute;left:84px;top:224px;display:flex;flex-direction:column;gap:16px}
+.row{display:flex;align-items:flex-end;gap:18px}
+.cells{display:flex}
+.word{display:flex;flex-direction:column}
+.en{font:500 22px/1.3 "Zen Kaku Gothic New",sans-serif;color:var(--en);border-bottom:2px solid var(--en);margin:0 4px 6px;padding:0 2px}
+.sq{display:flex}
+.c{width:66px;height:66px;border:1.5px solid var(--grid);margin-left:-1.5px;display:grid;place-items:center;font:500 34px/1 "Shippori Mincho B1",serif}
+.word:first-child .c:first-child{margin-left:0}
+.n{font:700 24px/1 "Zen Kaku Gothic New",sans-serif;padding-bottom:20px}
+.stamp{position:absolute;right:120px;top:250px;width:230px;height:230px;border:7px solid var(--grid);border-radius:50%;color:var(--grid);display:grid;place-items:center;text-align:center;font:700 58px/1.08 "Shippori Mincho B1",serif;transform:rotate(-12deg)}
+.stamp::after{content:"";position:absolute;inset:12px;border:2px solid var(--grid);border-radius:50%}
+</style>
+</head>
+<body>
+<div class="frame"></div>
+<div class="title">ジャパニーズ英語俳句</div>
+<div class="sub">英単語をカタカナ読みして、5・7・5になるか判定</div>
+<div class="grid">
+  <div class="row"><div class="cells">
+    <div class="word"><span class="en">level</span><span class="sq"><span class="c">レ</span><span class="c">ベ</span><span class="c">ル</span></span></div>
+    <div class="word"><span class="en">2</span><span class="sq"><span class="c">ツ</span><span class="c">ー</span></span></div>
+  </div><span class="n">5</span></div>
+  <div class="row"><div class="cells">
+    <div class="word"><span class="en">ice</span><span class="sq"><span class="c">ア</span><span class="c">イ</span><span class="c">ス</span></span></div>
+    <div class="word"><span class="en">cream</span><span class="sq"><span class="c">ク</span><span class="c">リ</span><span class="c">ー</span><span class="c">ム</span></span></div>
+  </div><span class="n">7</span></div>
+  <div class="row"><div class="cells">
+    <div class="word"><span class="en">island</span><span class="sq"><span class="c">ア</span><span class="c">イ</span><span class="c">ラ</span><span class="c">ン</span><span class="c">ド</span></span></div>
+  </div><span class="n">5</span></div>
+</div>
+<div class="stamp">五七五<br>成立</div>
+</body>
+</html>

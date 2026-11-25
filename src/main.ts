@@ -4,6 +4,7 @@ import { moraCount, morae, toKatakana } from './haiku/mora.ts';
 import { readingsFor, type Reading } from './haiku/readings.ts';
 import { fallbackLayout, solve575, TARGET, type Layout } from './haiku/solver.ts';
 import { tokenize, type Token } from './haiku/tokenize.ts';
+import { fromQuery, shareUrl, toQuery, type ReadingLock } from './share.ts';
 
 const PRESETS = [
   'level 2 ice cream island',
@@ -58,11 +59,52 @@ $('presets').addEventListener('click', (e) => {
   void run();
 });
 
-try {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (saved) src.value = saved;
-} catch {
-  // storage may be unavailable
+const permalink = fromQuery(location.search);
+if (permalink.text) {
+  src.value = permalink.text;
+  const { tokens } = tokenize(permalink.text);
+  for (const { index, kana } of permalink.locks) {
+    const t = tokens[index];
+    if (t) locks.set(lockKey(index, t.text), kana);
+  }
+} else {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) src.value = saved;
+  } catch {
+    // storage may be unavailable
+  }
+}
+
+/** Locks that still match the current words */
+function activeLocks(): ReadingLock[] {
+  return words.flatMap((w, index) => {
+    const kana = locks.get(lockKey(index, w.text));
+    return kana ? [{ index, kana }] : [];
+  });
+}
+
+function currentUrl(): string {
+  return `${location.origin}${location.pathname}${toQuery(src.value, activeLocks())}`;
+}
+
+const shareLink = $<HTMLAnchorElement>('share');
+
+function updateShare() {
+  history.replaceState(null, '', currentUrl());
+  const r = result;
+  if (!r || !words.length) {
+    shareLink.setAttribute('aria-disabled', 'true');
+    return;
+  }
+  const lines = [0, 1, 2].map((line) => words.filter((_, i) => r.split[i] === line));
+  shareLink.removeAttribute('aria-disabled');
+  shareLink.href = shareUrl({
+    english: lines.map((ws) => ws.map((w) => w.text).join(' ')),
+    kana: lines.map((ws) => ws.map((w) => w.options[r.choice[words.indexOf(w)]!]!.kana).join('')),
+    ok: r.ok,
+    url: currentUrl(),
+  });
 }
 
 function cellsIn(line: number): number {
@@ -111,6 +153,7 @@ async function run() {
   const unknown = words.filter((w) => !w.options.length);
   result = unknown.length ? null : (solve575(words, manual) ?? fallbackLayout(words, manual));
   render(unknown);
+  updateShare();
 }
 
 function clearResult(message: string) {
@@ -241,23 +284,13 @@ $('reset').addEventListener('click', () => {
 
 const copyBtn = $<HTMLButtonElement>('copy');
 copyBtn.addEventListener('click', async () => {
-  const r = result;
-  if (!r) return;
-  const en = [0, 1, 2]
-    .map((line) =>
-      words
-        .filter((_, i) => r.split[i] === line)
-        .map((w) => w.text)
-        .join(' '),
-    )
-    .join(' / ');
   try {
-    await navigator.clipboard.writeText(`${en}\n${kanaEl.textContent}\n${statusEl.textContent}`);
+    await navigator.clipboard.writeText(currentUrl());
     copyBtn.textContent = 'コピーしました';
   } catch {
     copyBtn.textContent = 'コピーできませんでした';
   }
-  setTimeout(() => (copyBtn.textContent = '結果をコピー'), 1600);
+  setTimeout(() => (copyBtn.textContent = 'リンクをコピー'), 1600);
 });
 
 let timer = 0;
