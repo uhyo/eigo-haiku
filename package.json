@@ -1,0 +1,28 @@
+{
+  "name": "eigo-haiku",
+  "version": "1.0.0",
+  "description": "英単語のカタカナ読みで5・7・5を判定する「ジャパニーズ英語俳句」",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uhyo/eigo-haiku.git"
+  },
+  "bugs": {
+    "url": "https://github.com/uhyo/eigo-haiku/issues"
+  },
+  "homepage": "https://github.com/uhyo/eigo-haiku#readme",
+  "devDependencies": {
+    "@types/node": "^26.6.7",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.1"
+  },
+  "private": true,
+  "type": "module"
+}
