@@ -20,6 +20,11 @@ describe('morae', () => {
     expect(morae('パーティー')).toEqual(['パ', 'ー', 'ティ', 'ー']);
   });
 
+  test('punctuation is not counted', () => {
+    expect(moraCount('サンタ・クロース')).toBe(7);
+    expect(moraCount('ら〜めん')).toBe(4);
+  });
+
   test('hiragana is accepted', () => {
     expect(toKatakana('れべる')).toBe('レベル');
     expect(moraCount('きゃっと')).toBe(3);
