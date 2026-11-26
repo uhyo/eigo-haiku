@@ -12,6 +12,7 @@ export interface Tokenized {
 
 export function tokenize(input: string): Tokenized {
   const lines = input
+    .normalize('NFKC')
     .split('\n')
     .map((l) => l.trim())
     .filter(Boolean);
@@ -21,7 +22,8 @@ export function tokenize(input: string): Tokenized {
     for (const raw of l.split(/[\s\-/–—_]+/)) {
       const text = raw
         .replace(/[’‘]/g, "'")
-        .replace(/^[^\p{L}\p{N}']+|[^\p{L}\p{N}']+$/gu, '');
+        // Keep symbols that are read aloud: 100%, C++, #haiku, rock & roll
+        .replace(/^[^\p{L}\p{N}'&+@%#=]+|[^\p{L}\p{N}'&+@%#=]+$/gu, '');
       if (text) tokens.push({ text, line: manual ? li : null });
     }
   });
