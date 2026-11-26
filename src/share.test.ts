@@ -36,8 +36,12 @@ describe('share', () => {
 
   test('builds the post text', () => {
     expect(shareText(input)).toBe(
-      'level 2 / ice cream / island\nレベルツー／アイスクリーム／アイランド（5・7・5 成立）\n#ジャパニーズ英語俳句',
+      'level 2 / ice cream / island\nレベルツー／アイスクリーム／アイランド\n#ジャパニーズ英語俳句',
     );
+  });
+
+  test('marks a haiku that is not 5-7-5', () => {
+    expect(shareText({ ...input, ok: false })).toContain('アイランド（不成立）');
   });
 
   test('builds an X intent URL', () => {

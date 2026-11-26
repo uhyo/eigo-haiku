@@ -47,7 +47,8 @@ export interface ShareInput {
 }
 
 export function shareText({ english, kana, ok }: Omit<ShareInput, 'url'>): string {
-  return `${english.join(' / ')}\n${kana.join('／')}（${ok ? '5・7・5 成立' : '不成立'}）\n#${HASHTAG}`;
+  // A haiku that works needs no label; only a failed one is marked
+  return `${english.join(' / ')}\n${kana.join('／')}${ok ? '' : '（不成立）'}\n#${HASHTAG}`;
 }
 
 export function shareUrl(input: ShareInput): string {
